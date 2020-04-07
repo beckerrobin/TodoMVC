@@ -111,7 +111,7 @@
                 if (request.ok) {
                     let response = await request.json();
                     this.listItems = response;
-                    this.listItems.sort((a, b) => a.order < b.order)
+                    this.listItems.sort((a, b) => a.order - b.order)
                 } else
                     console.log(await request.text())
             },
@@ -124,9 +124,23 @@
                 }
             },
             // Removes specific item in list, save to localStorage and re-populate
-            removeItem(itemToRemove) {
-                this.listItems = this.listItems.filter(node => node != itemToRemove);
-                this.saveToLocalStorage();
+            async removeItem(itemToRemove) {
+                // this.listItems = this.listItems.filter(node => node != itemToRemove);
+                // this.saveToLocalStorage();
+                let data = JSON.stringify({taskId: itemToRemove.taskId})
+                let request = await fetch("/api/tasks/delete", {
+                    method: "DELETE",
+                    body: data,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Content-Length': data.length
+                    }
+                });
+                let response = await request.text();
+                console.log("response: " + response);
+                if (response == "1") {
+                    this.listItems = this.listItems.filter(node => node != itemToRemove);
+                }
             },
             // Saves items to localStorage as stringified JSON-objects
             saveToLocalStorage() {
@@ -202,9 +216,6 @@
             }
         },
         created() {
-            // Read from local storage
-            // this.loadSavedData();
-
             // Read from API
             this.loadSavedDataAPI();
 
