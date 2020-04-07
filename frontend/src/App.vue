@@ -138,8 +138,8 @@
                 });
                 let response = await request.text();
                 console.log("response: " + response);
-                if (response == "1") {
-                    this.listItems = this.listItems.filter(node => node != itemToRemove);
+                if (response === "1") {
+                    this.listItems = this.listItems.filter(node => node !== itemToRemove);
                 }
             },
             // Saves items to localStorage as stringified JSON-objects
@@ -167,7 +167,9 @@
                 if (request.ok) {
                     let responseObject = await request.json();
                     this.listItems.push(responseObject);
+                    return true
                 }
+                return false
                 // this.saveToLocalStorage();
             },
             // set locationHash to filter
@@ -188,21 +190,21 @@
             },
             // Removes completed items from list
             clearCompleted() {
-                this.listItems = this.listItems.filter(todo => todo.value == false);
+                this.listItems.filter(todo => todo.completed == true).forEach(todo => this.removeItem(todo));
                 this.saveToLocalStorage();
             },
             // Toggle all items either on or off
             toggleAll() {
                 let bool = !this.allChecked;
                 this.listItems.forEach(todo => {
-                    todo.value = bool;
+                    todo.completed = bool;
                 });
                 this.saveToLocalStorage();
             }
         },
         computed: {
             filteredItems() {
-                return this.listItems.filter(item => this.filter == null || item.value == this.filter);
+                return this.listItems.filter(item => this.filter == null || item.completed == this.filter);
             },
             // "X items left"-text
             itemsLeft() {
@@ -213,16 +215,16 @@
                 );
             },
             hasCompleted() {
-                return this.listItems.filter(todo => todo.value == true).length > 0;
+                return this.listItems.filter(todo => todo.completed === true).length > 0;
             },
             // Used to toggle "check all"-arrow if all items are already checked
             allChecked() {
-                if (this.listItems.length == 0) {
+                if (this.listItems.length === 0) {
                     return false;
                 }
 
                 return (
-                    this.listItems.filter(todo => todo.value == true).length ==
+                    this.listItems.filter(todo => todo.completed === true).length ===
                     this.listItems.length
                 );
             }
