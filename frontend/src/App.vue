@@ -119,7 +119,7 @@
             newInput(event) {
                 var todoInput = event.target;
                 if (todoInput.value.trim().length > 0) {
-                    this.newItem(todoInput.value);
+                    this.newItem(todoInput.value.trim());
                     todoInput.value = null;
                 }
             },
@@ -152,11 +152,23 @@
                     );
                 }
             },
-            // Create new item, save it to localStorage and re-populate list
-            newItem(content) {
-                const newItem = {content: content.trim(), value: false};
-                this.listItems.push(newItem);
-                this.saveToLocalStorage();
+            // Create new item
+            async newItem(content) {
+                const newItem = {content: content};
+                let data = JSON.stringify(newItem)
+                let request = await fetch("/api/tasks/add", {
+                    method: "POST",
+                    body: data,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Content-Length': data.length
+                    }
+                });
+                if (request.ok) {
+                    let responseObject = await request.json();
+                    this.listItems.push(responseObject);
+                }
+                // this.saveToLocalStorage();
             },
             // set locationHash to filter
             setHash(event) {

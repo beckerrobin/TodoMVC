@@ -2,6 +2,7 @@ package se.robin.todomvc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,14 +15,23 @@ public class TaskService {
         this.repository = repository;
     }
 
-    public TodoTask add(int listId) {
-        return repository.addTask(new TodoTask(listId));
+    @Transactional
+    public TodoTask addTask(String content) {
+        return repository.addTask(new TodoTask(content));
     }
 
+    @Transactional
     public List<TodoTask> getTasks(int listId) {
         return repository.getTasks(listId);
     }
+
+    @Transactional
     public TodoTask getSingleTask(int listId) {
         return repository.getSingleTask(listId);
+    }
+
+    @Transactional
+    public int deleteTask(int taskId) {
+        return repository.deleteTask(taskId);
     }
 }

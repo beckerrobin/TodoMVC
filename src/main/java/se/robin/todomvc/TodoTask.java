@@ -29,6 +29,11 @@ public class TodoTask {
         this.listId = listId;
     }
 
+    public TodoTask(String content) {
+        this.content = content;
+        this.listId = 1;
+    }
+
     public int getTaskId() {
         return taskId;
     }

@@ -28,6 +28,7 @@ public class TodoController {
         List<TodoTask> tasks = taskService.getTasks(1);
         return ResponseEntity.ok(tasks);
     }
+
     @GetMapping("/api/tasks/getsingle")
     @ResponseBody
     public ResponseEntity<TodoTask> getSingleTask(@RequestBody ListData list) {
@@ -35,9 +36,16 @@ public class TodoController {
         return ResponseEntity.ok(task);
     }
 
+    @DeleteMapping("/api/tasks/delete")
+    @ResponseBody
+    public ResponseEntity<Integer> deleteTask(@RequestBody TaskData taskId) {
+        Integer deleted = taskService.deleteTask(taskId.getTaskId());
+        return ResponseEntity.ok(deleted);
+    }
+
     @PostMapping("/api/tasks/add")
     public ResponseEntity<TodoTask> AddTask(@RequestBody TaskData task) {
-        TodoTask added = taskService.add(task.getListId());
+        TodoTask added = taskService.addTask(task.getContent());
         if (added == null) {
             return ResponseEntity.status(500).build();
         }
