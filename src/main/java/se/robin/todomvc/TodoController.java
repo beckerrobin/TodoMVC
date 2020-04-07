@@ -23,8 +23,9 @@ public class TodoController {
 
     @GetMapping("/api/tasks/get")
     @ResponseBody
-    public ResponseEntity<List<TodoTask>> getTasks(@RequestBody ListData list) {
-        List<TodoTask> tasks = taskService.getTasks(list.getListId());
+//    public ResponseEntity<List<TodoTask>> getTasks(@RequestBody ListData list) {
+    public ResponseEntity<List<TodoTask>> getTasks() {
+        List<TodoTask> tasks = taskService.getTasks(1);
         return ResponseEntity.ok(tasks);
     }
     @GetMapping("/api/tasks/getsingle")

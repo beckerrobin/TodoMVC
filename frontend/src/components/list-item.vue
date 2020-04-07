@@ -2,7 +2,7 @@
   <!-- List-item template -->
   <li class="list-item" v-if="item.content">
     <div class="list-item-div" v-show="(edit != true)">
-      <input type="checkbox" class="todo-item" :checked="item.value" @change="toggleValue" />
+      <input type="checkbox" class="todo-item" :checked="item.completed" @change="toggleValue" />
       <p @dblclick="enableEdit" class="list-label">{{ item.content }}</p>
       <button class="remove-button" @click="removeItem"></button>
     </div>
@@ -32,7 +32,7 @@ export default {
   methods: {
     // Toggles the value of a single item
     toggleValue: function() {
-      this.item.value = !this.item.value;
+      this.item.completed = !this.item.completed;
       this.$emit("change");
     },
     // when edit-input loses focus
