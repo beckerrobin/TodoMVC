@@ -23,7 +23,7 @@ public class TaskRepository {
      * @return Object that was created, with ID and real taskOrder
      */
     public TodoTask addTask(TodoTask task) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Serializable id = session.save(task);
         TodoTask createdTask = session.get(TodoTask.class, id);
         System.out.println(createdTask);

@@ -20,12 +20,12 @@ public class TaskService {
         return repository.addTask(new TodoTask(content));
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<TodoTask> getTasks(int listId) {
         return repository.getTasks(listId);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public TodoTask getSingleTask(int listId) {
         return repository.getSingleTask(listId);
     }
