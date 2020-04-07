@@ -29,4 +29,34 @@ public class TodoTask {
         this.listId = listId;
     }
 
+    public int getTaskId() {
+        return taskId;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public int getListId() {
+        return listId;
+    }
+
+    @Override
+    public String toString() {
+        return "TodoTask{" +
+                "taskId=" + taskId +
+                ", order=" + order +
+                ", content='" + content + '\'' +
+                ", isCompleted=" + isCompleted +
+                ", listId=" + listId +
+                '}';
+    }
 }

@@ -2,9 +2,9 @@ package se.robin.todomvc;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class TodoController {
@@ -19,6 +19,19 @@ public class TodoController {
     @RequestMapping("/")
     public String start() {
         return "index";
+    }
+
+    @GetMapping("/api/tasks/get")
+    @ResponseBody
+    public ResponseEntity<List<TodoTask>> getTasks(@RequestBody ListData list) {
+        List<TodoTask> tasks = taskService.getTasks(list.getListId());
+        return ResponseEntity.ok(tasks);
+    }
+    @GetMapping("/api/tasks/getsingle")
+    @ResponseBody
+    public ResponseEntity<TodoTask> getSingleTask(@RequestBody ListData list) {
+        TodoTask task = taskService.getSingleTask(list.getListId());
+        return ResponseEntity.ok(task);
     }
 
     @PostMapping("/api/tasks/add")
@@ -38,4 +51,5 @@ public class TodoController {
         }
         return ResponseEntity.ok(added);
     }
+
 }
