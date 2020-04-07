@@ -1,4 +1,4 @@
-import Vue from 'https://unpkg.com/vue'
+import Vue from 'vue'
 import App from './App.vue'
 
 document.title += " - Vue"
