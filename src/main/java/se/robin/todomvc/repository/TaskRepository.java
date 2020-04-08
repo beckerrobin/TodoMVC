@@ -29,14 +29,22 @@ public class TaskRepository {
         return session.get(TodoTask.class, id);
     }
 
-    public List<TodoTask> getTasks(int listId) {
+    /**
+     * Get all tasks from database
+     * @return List of TodoTask-objects
+     */
+    public List<TodoTask> getTasks() {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "from TodoTask WHERE listId = :list_id";
+        String hql = "from TodoTask";
         Query<TodoTask> query = session.createQuery(hql, TodoTask.class);
-        query.setParameter("list_id", listId);
         return query.list();
     }
 
+    /**
+     * Get a single task with the specified taskId
+     * @param taskId Id of task to be returned
+     * @return Single TodoTask-object
+     */
     public TodoTask getSingleTask(int taskId) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from TodoTask WHERE taskId = :task_id";

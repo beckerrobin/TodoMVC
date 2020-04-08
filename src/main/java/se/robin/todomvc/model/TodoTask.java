@@ -22,10 +22,6 @@ public class TodoTask {
     public TodoTask() {
     }
 
-    public TodoTask(int listId) {
-        this.listId = listId;
-    }
-
     public TodoTask(String content) {
         this.content = content;
     }
