@@ -20,12 +20,13 @@ public class TaskRepository {
      * Creates new task
      *
      * @param task Task-object to be added to database
-     * @return Object that was created, with ID and real taskOrder
+     * @return Object that was created, with real ID
      */
     public TodoTask addTask(TodoTask task) {
         Session session = sessionFactory.getCurrentSession();
         Serializable id = session.save(task);
         TodoTask createdTask = session.get(TodoTask.class, id);
+        System.out.println(task);
         System.out.println(createdTask);
         return createdTask;
     }
@@ -41,7 +42,7 @@ public class TaskRepository {
 
     public TodoTask getSingleTask(int listId) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "from TodoTask WHERE listId = :list_id and order = 1";
+        String hql = "from TodoTask WHERE listId = :list_id";
         Query<TodoTask> query = session.createQuery(hql, TodoTask.class);
         query.setParameter("list_id", listId);
         System.out.println("Returning: " + ((TodoTask) query.getSingleResult()));

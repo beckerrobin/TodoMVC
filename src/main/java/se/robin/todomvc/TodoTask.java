@@ -10,9 +10,6 @@ public class TodoTask {
     @Column(name = "taskId", nullable = false)
     private int taskId;
 
-    @Column(name = "taskOrder", nullable = false)
-    private int order;
-
     @Column(name = "content", nullable = false, length = 255)
     private String content = "";
 
@@ -38,10 +35,6 @@ public class TodoTask {
         return taskId;
     }
 
-    public int getOrder() {
-        return order;
-    }
-
     public String getContent() {
         return content;
     }
@@ -58,7 +51,6 @@ public class TodoTask {
     public String toString() {
         return "TodoTask{" +
                 "taskId=" + taskId +
-                ", order=" + order +
                 ", content='" + content + '\'' +
                 ", isCompleted=" + isCompleted +
                 ", listId=" + listId +
