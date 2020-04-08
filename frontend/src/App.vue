@@ -24,7 +24,7 @@
                         :item="item"
                         :key="index"
                         @remove="removeItem(item)"
-                        @change="saveToLocalStorage"
+                        @change="updateItem(item)"
                 ></list-item>
             </ul>
         </main>
@@ -77,7 +77,7 @@
         name: "App",
         data() {
             return {
-                listItems: [], // Contains taskId, order, content, completed, listId
+                listItems: [], // Contains taskId, content, completed, listId
                 filter: null
             };
         },
@@ -88,7 +88,7 @@
             // Load data from Local Storage
             loadSavedData() {
                 let localStorageObject = Object.entries(localStorage).filter(
-                    k => k[0].indexOf("todos") != -1
+                    k => k[0].indexOf("todos") !== -1
                 ); // Funkar inte i Edge
 
                 // Sort based on "local storage"-key, all keys are unique, form of "todos-X"
@@ -111,23 +111,35 @@
                 if (request.ok) {
                     let response = await request.json();
                     this.listItems = response;
-                    this.listItems.sort((a, b) => a.order - b.order)
+                    this.listItems.sort((a, b) => a.taskId - b.taskId)
                 } else
                     console.log(await request.text())
             },
             // keyPress "enter" event from main input-box
             newInput(event) {
-                var todoInput = event.target;
+                const todoInput = event.target;
                 if (todoInput.value.trim().length > 0) {
                     this.newItem(todoInput.value.trim());
                     todoInput.value = null;
                 }
             },
+            // Update content and completed for item
+            async updateItem(itemToUpdate) {
+                let data = JSON.stringify(itemToUpdate);
+                let request = await fetch("/api/tasks/update", {
+                    method: "PUT",
+                    body: data,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Content-Length': data.length
+                    }
+                });
+                let response = await request.json();
+                itemToUpdate = response
+            },
             // Removes specific item in list, save to localStorage and re-populate
             async removeItem(itemToRemove) {
-                // this.listItems = this.listItems.filter(node => node != itemToRemove);
-                // this.saveToLocalStorage();
-                let data = JSON.stringify({taskId: itemToRemove.taskId})
+                let data = JSON.stringify({taskId: itemToRemove.taskId});
                 let request = await fetch("/api/tasks/delete", {
                     method: "DELETE",
                     body: data,
@@ -137,25 +149,14 @@
                     }
                 });
                 let response = await request.text();
-                console.log("response: " + response);
                 if (response === "1") {
                     this.listItems = this.listItems.filter(node => node !== itemToRemove);
-                }
-            },
-            // Saves items to localStorage as stringified JSON-objects
-            saveToLocalStorage() {
-                window.localStorage.clear();
-                for (let i = 0; i < this.listItems.length; i++) {
-                    window.localStorage.setItem(
-                        "todos-" + i,
-                        JSON.stringify(this.listItems[i])
-                    );
                 }
             },
             // Create new item
             async newItem(content) {
                 const newItem = {content: content};
-                let data = JSON.stringify(newItem)
+                let data = JSON.stringify(newItem);
                 let request = await fetch("/api/tasks/add", {
                     method: "POST",
                     body: data,
@@ -190,27 +191,26 @@
             },
             // Removes completed items from list
             clearCompleted() {
-                this.listItems.filter(todo => todo.completed == true).forEach(todo => this.removeItem(todo));
-                this.saveToLocalStorage();
+                this.listItems.filter(todo => todo.completed === true).forEach(todo => this.removeItem(todo));
             },
             // Toggle all items either on or off
             toggleAll() {
                 let bool = !this.allChecked;
                 this.listItems.forEach(todo => {
                     todo.completed = bool;
+                    this.updateItem(todo)
                 });
-                this.saveToLocalStorage();
             }
         },
         computed: {
             filteredItems() {
-                return this.listItems.filter(item => this.filter == null || item.completed == this.filter);
+                return this.listItems.filter(item => this.filter == null || item.completed === this.filter);
             },
             // "X items left"-text
             itemsLeft() {
                 return (
                     this.listItems.length +
-                    (this.listItems.length == 1 ? " item" : " items") +
+                    (this.listItems.length === 1 ? " item" : " items") +
                     " left"
                 );
             },

@@ -26,12 +26,17 @@ public class TaskService {
     }
 
     @Transactional(readOnly = true)
-    public TodoTask getSingleTask(int listId) {
-        return repository.getSingleTask(listId);
+    public TodoTask getSingleTask(int taskId) {
+        return repository.getSingleTask(taskId);
     }
 
     @Transactional
     public int deleteTask(int taskId) {
         return repository.deleteTask(taskId);
+    }
+
+    @Transactional
+    public TodoTask updateTask(TaskData task) {
+        return repository.updateTask(new TodoTask(task.getTaskId(), task.getContent(), task.getCompleted()));
     }
 }

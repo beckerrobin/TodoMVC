@@ -10,14 +10,14 @@ public class TodoTask {
     @Column(name = "taskId", nullable = false)
     private int taskId;
 
-    @Column(name = "content", nullable = false, length = 255)
+    @Column(name = "content", nullable = false)
     private String content = "";
 
-    @Column(name = "isCompleted", nullable = false)
-    private boolean isCompleted = false;
+    @Column(name = "completed", nullable = false)
+    private Boolean completed = false;
 
     @Column(name = "listId", nullable = false)
-    private int listId;
+    private int listId = 1;
 
     public TodoTask() {
     }
@@ -28,7 +28,12 @@ public class TodoTask {
 
     public TodoTask(String content) {
         this.content = content;
-        this.listId = 1;
+    }
+
+    public TodoTask(int taskId, String content, boolean completed) {
+        this.content = content;
+        this.taskId = taskId;
+        this.completed = completed;
     }
 
     public int getTaskId() {
@@ -39,8 +44,8 @@ public class TodoTask {
         return content;
     }
 
-    public boolean isCompleted() {
-        return isCompleted;
+    public Boolean isCompleted() {
+        return completed;
     }
 
     public int getListId() {
@@ -52,7 +57,7 @@ public class TodoTask {
         return "TodoTask{" +
                 "taskId=" + taskId +
                 ", content='" + content + '\'' +
-                ", isCompleted=" + isCompleted +
+                ", completed=" + completed +
                 ", listId=" + listId +
                 '}';
     }

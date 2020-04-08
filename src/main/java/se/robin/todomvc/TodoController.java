@@ -31,8 +31,8 @@ public class TodoController {
 
     @GetMapping("/api/tasks/getsingle")
     @ResponseBody
-    public ResponseEntity<TodoTask> getSingleTask(@RequestBody ListData list) {
-        TodoTask task = taskService.getSingleTask(list.getListId());
+    public ResponseEntity<TodoTask> getSingleTask(@RequestBody TaskData data) {
+        TodoTask task = taskService.getSingleTask(data.getTaskId());
         return ResponseEntity.ok(task);
     }
 
@@ -44,7 +44,7 @@ public class TodoController {
     }
 
     @PostMapping("/api/tasks/add")
-    public ResponseEntity<TodoTask> AddTask(@RequestBody TaskData task) {
+    public ResponseEntity<TodoTask> addTask(@RequestBody TaskData task) {
         TodoTask added = taskService.addTask(task.getContent());
         if (added == null) {
             return ResponseEntity.status(500).build();
@@ -52,8 +52,18 @@ public class TodoController {
         return ResponseEntity.ok(added);
     }
 
+    @PutMapping("/api/tasks/update")
+    public ResponseEntity<TodoTask> updateTask(@RequestBody TaskData task) {
+        System.out.println(task);
+        TodoTask updated = taskService.updateTask(task);
+        if (updated == null) {
+            return ResponseEntity.status(500).build();
+        }
+        return ResponseEntity.ok(updated);
+    }
+
     @PostMapping("/api/lists/add")
-    public ResponseEntity<TodoList> AddList() {
+    public ResponseEntity<TodoList> addList() {
         TodoList added = listService.add();
         if (added == null) {
             return ResponseEntity.status(500).build();

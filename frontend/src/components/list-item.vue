@@ -1,7 +1,7 @@
 <template>
   <!-- List-item template -->
   <li class="list-item" v-if="item.content">
-    <div class="list-item-div" v-show="(edit != true)">
+    <div class="list-item-div" v-show="(edit !== true)">
       <input type="checkbox" class="todo-item" :checked="item.completed" @change="toggleValue" />
       <p @dblclick="enableEdit" class="list-label">{{ item.content }}</p>
       <button class="remove-button" @click="removeItem"></button>
@@ -39,7 +39,7 @@ export default {
     loseFocus() {
       this.item.content = event.target.value.trim();
       this.edit = false;
-      if (this.item.content == "") {
+      if (this.item.content === "") {
         this.removeItem();
       } else {
         this.$emit("change");

@@ -4,6 +4,7 @@ public class TaskData {
     private int listId;
     private int taskId;
     private String content;
+    private Boolean completed;
 
     public String getContent() {
         return content;
@@ -13,15 +14,17 @@ public class TaskData {
         return taskId;
     }
 
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
+    public Boolean getCompleted() {
+        return completed;
     }
 
-    public int getListId() {
-        return listId;
-    }
-
-    public void setListId(int listId) {
-        this.listId = listId;
+    @Override
+    public String toString() {
+        return "TaskData{" +
+                "listId=" + listId +
+                ", taskId=" + taskId +
+                ", content='" + content + '\'' +
+                ", isCompleted=" + completed +
+                '}';
     }
 }

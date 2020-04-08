@@ -25,10 +25,7 @@ public class TaskRepository {
     public TodoTask addTask(TodoTask task) {
         Session session = sessionFactory.getCurrentSession();
         Serializable id = session.save(task);
-        TodoTask createdTask = session.get(TodoTask.class, id);
-        System.out.println(task);
-        System.out.println(createdTask);
-        return createdTask;
+        return session.get(TodoTask.class, id);
     }
 
     public List<TodoTask> getTasks(int listId) {
@@ -36,16 +33,14 @@ public class TaskRepository {
         String hql = "from TodoTask WHERE listId = :list_id";
         Query<TodoTask> query = session.createQuery(hql, TodoTask.class);
         query.setParameter("list_id", listId);
-        System.out.println("Returning: " + query.list().size() + " items");
         return query.list();
     }
 
-    public TodoTask getSingleTask(int listId) {
+    public TodoTask getSingleTask(int taskId) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "from TodoTask WHERE listId = :list_id";
+        String hql = "from TodoTask WHERE taskId = :task_id";
         Query<TodoTask> query = session.createQuery(hql, TodoTask.class);
-        query.setParameter("list_id", listId);
-        System.out.println("Returning: " + ((TodoTask) query.getSingleResult()));
+        query.setParameter("task_id", taskId);
         return query.getSingleResult();
     }
 
@@ -60,8 +55,17 @@ public class TaskRepository {
         String hql = "DELETE TodoTask WHERE taskId = :task_id";
         Query query = session.createQuery(hql);
         query.setParameter("task_id", taskId);
-        int response = query.executeUpdate();
-        System.out.println("Deleting task id: " + taskId + ", Response: " + response);
-        return response;
+        return query.executeUpdate();
+    }
+
+    /**
+     * Updates a row in the database with new content and isCompleted
+     *
+     * @param task Task containing the new data as well as the intended taskId
+     * @return The updated TodoTask-object
+     */
+    public TodoTask updateTask(TodoTask task) {
+        Session session = sessionFactory.getCurrentSession();
+        return (TodoTask) session.merge(task);
     }
 }
