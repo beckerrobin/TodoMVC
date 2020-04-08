@@ -1,9 +1,10 @@
-package se.robin.todomvc;
+package se.robin.todomvc.repository;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
+import se.robin.todomvc.model.TodoTask;
 
 import java.io.Serializable;
 import java.util.List;

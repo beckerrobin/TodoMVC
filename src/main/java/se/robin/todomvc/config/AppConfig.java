@@ -1,4 +1,4 @@
-package se.robin.todomvc;
+package se.robin.todomvc.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

@@ -1,8 +1,9 @@
-package se.robin.todomvc;
+package se.robin.todomvc.repository;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
+import se.robin.todomvc.model.TodoList;
 
 @Component
 public class ListRepository {

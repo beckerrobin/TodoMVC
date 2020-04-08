@@ -1,4 +1,4 @@
-package se.robin.todomvc;
+package se.robin.todomvc.web;
 
 public class ListData {
     private int listId;

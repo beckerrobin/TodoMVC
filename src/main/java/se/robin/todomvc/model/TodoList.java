@@ -1,4 +1,4 @@
-package se.robin.todomvc;
+package se.robin.todomvc.model;
 
 import javax.persistence.*;
 

@@ -1,8 +1,12 @@
-package se.robin.todomvc;
+package se.robin.todomvc.web;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import se.robin.todomvc.model.TodoList;
+import se.robin.todomvc.model.TodoTask;
+import se.robin.todomvc.service.ListService;
+import se.robin.todomvc.service.TaskService;
 
 import java.util.List;
 

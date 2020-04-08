@@ -1,8 +1,11 @@
-package se.robin.todomvc;
+package se.robin.todomvc.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import se.robin.todomvc.model.TodoTask;
+import se.robin.todomvc.repository.TaskRepository;
+import se.robin.todomvc.web.TaskData;
 
 import java.util.List;
 
