@@ -26,6 +26,7 @@ public class TodoController {
 
     /**
      * Get all tasks from database
+     *
      * @return List of TodoTask-objects
      */
     @GetMapping("/api/tasks/get")
@@ -37,6 +38,7 @@ public class TodoController {
 
     /**
      * Get a single task with the specified taskId
+     *
      * @param data Object containing taskId
      * @return Single TodoTask-object
      */
@@ -49,6 +51,7 @@ public class TodoController {
 
     /**
      * Delete single task
+     *
      * @param taskId Task to be removed
      * @return no of rows removed from database
      */
@@ -61,10 +64,12 @@ public class TodoController {
 
     /**
      * Add a new task
+     *
      * @param task Data containing content of task to be created
      * @return The newly created object
      */
     @PostMapping("/api/tasks/add")
+    @ResponseBody
     public ResponseEntity<TodoTask> addTask(@RequestBody TaskData task) {
         TodoTask added = taskService.addTask(task.getContent());
         if (added == null) {
@@ -75,12 +80,13 @@ public class TodoController {
 
     /**
      * Update an existing task in the database
+     *
      * @param task The new task-object to be updated based on taskId
      * @return Newly created TodoTask-object
      */
     @PutMapping("/api/tasks/update")
+    @ResponseBody
     public ResponseEntity<TodoTask> updateTask(@RequestBody TaskData task) {
-        System.out.println(task);
         TodoTask updated = taskService.updateTask(task);
         if (updated == null) {
             return ResponseEntity.status(500).build();

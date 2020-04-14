@@ -3,13 +3,13 @@ package se.robin.todomvc.repository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import se.robin.todomvc.model.TodoTask;
 
 import java.io.Serializable;
 import java.util.List;
 
-@Component
+@Repository
 public class TaskRepository {
     private SessionFactory sessionFactory;
 
@@ -31,6 +31,7 @@ public class TaskRepository {
 
     /**
      * Get all tasks from database
+     *
      * @return List of TodoTask-objects
      */
     public List<TodoTask> getTasks() {
@@ -42,6 +43,7 @@ public class TaskRepository {
 
     /**
      * Get a single task with the specified taskId
+     *
      * @param taskId Id of task to be returned
      * @return Single TodoTask-object
      */
