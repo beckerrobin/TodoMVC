@@ -20,6 +20,7 @@ public class TaskService {
 
     /**
      * Add a new task
+     *
      * @param content Content of task to be created
      * @return The newly created object
      */
@@ -30,6 +31,7 @@ public class TaskService {
 
     /**
      * Get all tasks from database
+     *
      * @return List of TodoTask-objects
      */
     @Transactional(readOnly = true)
@@ -39,6 +41,7 @@ public class TaskService {
 
     /**
      * Get a single task with the specified taskId
+     *
      * @param taskId Id of task to be returned
      * @return Single TodoTask-object
      */
@@ -49,6 +52,7 @@ public class TaskService {
 
     /**
      * Delete single task
+     *
      * @param taskId Task to be removed
      * @return no of rows removed from database
      */
@@ -59,6 +63,7 @@ public class TaskService {
 
     /**
      * Update an existing task in the database
+     *
      * @param task The new task-object to be updated based on taskId
      * @return Newly created TodoTask-object
      */
